@@ -33,12 +33,14 @@
                 left = document.getElementById("left").value;
                 right = document.getElementById("right").value;
                 op = document.querySelector('input[name="op"]:checked').value;
-                $.get("http://localhost:8080/leftOperand="+left+"&rightOperand="+right+"&operation="+op,
-                    function(data, status){
-                        response = JSON.parse(data);
-                        document.getElementById("exp").innerHTML = response.Expression;
-                        document.getElementById("res").innerHTML = response.Result;
-                    });
+                xhttp = new XMLHttpRequest();
+                xhttp.onload = function() {
+                    response = JSON.parse(this.responseText);
+                    document.getElementById("exp").innerHTML = response.Expression;
+                    document.getElementById("res").innerHTML = response.Result;
+                }
+                xhttp.open("GET", "http://localhost:8080/leftOperand="+left+"&rightOperand="+right+"&operation="+op);
+                xhttp.send();
             });
         });
     </script>
